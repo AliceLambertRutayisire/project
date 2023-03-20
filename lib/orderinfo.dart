@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project/paymt.dart';
 
-class ViewOrder extends StatefulWidget {
+class OrderInfo extends StatefulWidget {
   @override
-  _ViewOrderState createState() => _ViewOrderState();
+  _OrderInfoState createState() => _OrderInfoState();
 }
 
-class _ViewOrderState extends State<ViewOrder> {
+class _OrderInfoState extends State<OrderInfo> {
   @override
   int _selectedIndex = 0;
 
@@ -19,7 +19,7 @@ class _ViewOrderState extends State<ViewOrder> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Your Order',
+          'Order Info',
           style: TextStyle(
               fontFamily: 'Barlow Semi Condensed',
               color: Color.fromRGBO(50, 41, 57, 1),
@@ -95,23 +95,6 @@ class _ViewOrderState extends State<ViewOrder> {
                   ),
                 );
               },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(bottom: 30),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(50, 41, 57, 1)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CheckOrder()));
-              },
-              child: Text(
-                ' Checkout',
-                style: TextStyle(
-                    fontFamily: 'Barlow Semi Condensed',
-                    color: Color.fromRGBO(240, 236, 207, 1)),
-              ),
             ),
           ),
         ],
