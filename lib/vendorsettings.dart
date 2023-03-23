@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/main.dart';
 import 'package:project/vendordashboard.dart';
+import 'package:project/vendorlogin.dart';
 import 'package:project/wallet.dart';
 
 class VendorMenu extends StatefulWidget {
@@ -30,7 +31,7 @@ class _VendorMenuState extends State<VendorMenu> {
                         backgroundColor: Color(0xFFBB902D)),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => WalletPage()));
+                          MaterialPageRoute(builder: (context) => VendorDash()));
                     },
                     child: const Text(
                       'Profile',
@@ -48,7 +49,7 @@ class _VendorMenuState extends State<VendorMenu> {
                         backgroundColor: Color(0xFFBB902D)),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => VendorDash()));
+                          MaterialPageRoute(builder: (context) => WalletPage()));
                     },
                     child: const Text(
                       'Wallet',

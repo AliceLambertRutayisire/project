@@ -7,6 +7,7 @@ import 'package:project/dashboard.dart';
 import 'package:project/main.dart';
 import 'package:project/registrationverf.dart';
 import 'package:project/status.dart';
+import 'package:project/studentlogin.dart';
 
 import 'history.dart';
 import 'orderinfo.dart';
@@ -132,7 +133,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter name',
+                          hintText: 'Timmy Turner',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -177,7 +178,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _idController,
                         decoration: InputDecoration(
-                          hintText: 'Enter ID number',
+                          hintText: 'ALU2021CS25',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -224,7 +225,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _phoneNumberController,
                         decoration: InputDecoration(
-                          hintText: 'Enter phone number',
+                          hintText: '0782833456',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -271,7 +272,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _phoneNumberController,
                         decoration: InputDecoration(
-                          hintText: 'Enter MOMO number',
+                          hintText: '0789654323',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -318,7 +319,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _phoneNumberController,
                         decoration: InputDecoration(
-                          hintText: 'Enter Allergies',
+                          hintText: 'Milk',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -365,7 +366,7 @@ class _ProfileState extends State<Profile> {
                       child: TextFormField(
                         controller: _phoneNumberController,
                         decoration: InputDecoration(
-                          hintText: 'Enter Dietary Restrictions',
+                          hintText: 'Lactose intolerant',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -395,7 +396,7 @@ class _ProfileState extends State<Profile> {
                       backgroundColor: Color.fromRGBO(50, 41, 57, 1)),
                   onPressed: () {
                     Route route =
-                        MaterialPageRoute(builder: (context) => Order());
+                        MaterialPageRoute(builder: (context) => OrderStatus());
                     Navigator.push(context, route);
                   },
                   child: SizedBox(
@@ -408,17 +409,20 @@ class _ProfileState extends State<Profile> {
               //   flex: 1,
               // ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(50, 41, 57, 1)),
+                      backgroundColor: Color.fromRGBO(50, 41, 57, 1))
+                      ,
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => OrderStatus()));
+                            builder: (context) => Order()));
                   },
-                  child: SizedBox(width: 100, child: Text("Check Order status")),
+                  child: 
+                  SizedBox(width: 100, child: Text("Order status")
+                  ),
                 ),
               ),
               Padding(

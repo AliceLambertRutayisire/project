@@ -1,6 +1,6 @@
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
-import 'dart:html';
+
 import 'package:project/paymt.dart';
 import 'package:project/received.dart';
 

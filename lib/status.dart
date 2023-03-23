@@ -20,7 +20,7 @@ class _OrderStatusState extends State<OrderStatus> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Order Status',
+          'Order History',
           style: TextStyle(
               fontFamily: 'Barlow Semi Condensed',
               color: Color.fromRGBO(50, 41, 57, 1),
@@ -85,14 +85,14 @@ class _OrderStatusState extends State<OrderStatus> {
                                   Text("Total: ${_model.price} ", style: TextStyle( fontSize: 12.0,color: Color.fromRGBO(50, 41, 57, 1)))
                                 ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(_model.status, style: TextStyle( fontSize: 12.0,color: Color.fromRGBO(125, 122, 8, 1)))
-                                  ],
-                                ),
-                              ),
+                              // Expanded(
+                              //   child: Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.end,
+                              //     children: [
+                              //       Text(_model.status, style: TextStyle( fontSize: 12.0,color: Color.fromRGBO(125, 122, 8, 1)))
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                           ),
@@ -129,27 +129,34 @@ class _OrderStatusState extends State<OrderStatus> {
 }
 
 class StatusModel {
-  final String status;
+  
   final String name;
   final String details;
   final String order_number;
   final String price;
 
-  StatusModel({required this.status, required this.name, required this.details, required this.order_number, required this.price});
+  StatusModel({ required this.name, required this.details, required this.order_number, required this.price});
 
   static final List<StatusModel> dummyData = [
     StatusModel(
-        status: "",
-        name: "Order details",
+        
+        name: "Order summary",
         order_number: "Order #24", 
         details: "3 Dishes",
         price: "16000 RWF"),
     StatusModel(
-        status: "Completed",
-        name: "Payment details",
-        order_number: "0798641032",
-        details: "Timmy Timicus",
-        price:""),
+        
+         name: "Order summary",
+        order_number: "Order #24", 
+        details: "3 Dishes",
+        price: "16000 RWF"),
+    
+    StatusModel(
+        
+         name: "Order summary",
+        order_number: "Order #24", 
+        details: "3 Dishes",
+        price: "16000 RWF"),
     
   ];
 }

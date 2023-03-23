@@ -18,7 +18,7 @@ class _OrderState extends State<Order> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Order History',
+          'Order Summary',
           style: TextStyle(
               fontFamily: 'Barlow Semi Condensed',
               color: Color.fromRGBO(50, 41, 57, 1),
