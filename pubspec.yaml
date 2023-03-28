@@ -43,6 +43,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   image_picker: ^0.8.7
   firebase_auth: ^3.11.2
+  fluttertoast: ^8.2.1
 
 
 dev_dependencies:

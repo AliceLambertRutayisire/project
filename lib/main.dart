@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:project/splash.dart';
 import 'package:project/registration.dart';
 import 'package:project/studentlogin.dart';
+import 'package:project/stusignup.dart';
 import 'package:project/vendordashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/vendorlogin.dart';
+import 'package:project/vendorsignup.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -63,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => StudentLogin()));
+                              builder: (context) => StudentSignup()));
                     },
                     child: const Text(
-                      'Student Login',
+                      'Student Sign Up',
                       style: TextStyle(
                           fontFamily: 'Barlow Semi Condensed',
                           color: Color.fromRGBO(240, 236, 207, 1)),
@@ -79,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => VendorLogin()));
+                              builder: (context) => VendorSignup()));
                     },
-                    child: const Text("Vendor Login",
+                    child: const Text("Vendor Sign Up",
                         style: TextStyle(
                             fontFamily: 'Barlow Semi Condensed',
                             color: Color.fromRGBO(240, 236, 207, 1))))

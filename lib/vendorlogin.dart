@@ -1,5 +1,7 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/vendordashboard.dart';
 
 
@@ -13,6 +15,12 @@ class VendorLogin extends StatefulWidget {
 
 class _VendorLoginState extends State<VendorLogin> {
   final formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
+  
+  String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +36,27 @@ class _VendorLoginState extends State<VendorLogin> {
             crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisSize: Ma'inAxisSize.max,
             children: [
-              Image.asset("assets/images/vendor_login.png",
-                  width: 346, height: 376),
-              // const Spacer(flex: 1),
+              Expanded(
+                child: Image.asset("assets/images/vendor_login.png",
+                    width: 346, height: 376)),
+              
               Container(
                 child: SizedBox(
                   width: 300,
                   child: TextFormField(
+                    controller: _nameController,
+                  onSaved: (value) {
+                                _nameController.text = value!;
+                              },
                     decoration: const InputDecoration(
                         filled: true,
                         fillColor: Color.fromRGBO(217, 217, 217, 1),
-                        icon: const Icon(
+                        prefixIcon: const Icon(
                           Icons.shop,
                           color: Color.fromRGBO(187, 144, 45, 1),
                         ),
                         hintText: 'Enter vendor name',
-                        labelText: 'Name',
+                        labelText: 'Username',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                         enabledBorder: OutlineInputBorder(
@@ -60,11 +73,15 @@ class _VendorLoginState extends State<VendorLogin> {
               SizedBox(
                 width: 300,
                 child: TextFormField(
+                   controller: _passwordController,
+                  onSaved: (value) {
+                                _passwordController.text = value!;
+                              },
                   decoration: const InputDecoration(
                       filled: true,
                       fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      icon: const Icon(
-                        Icons.password_outlined,
+                      prefixIcon: const Icon(
+                        Icons.key,
                         color: Color.fromRGBO(187, 144, 45, 1),
                       ),
                       hintText: 'Enter password',
@@ -83,8 +100,7 @@ class _VendorLoginState extends State<VendorLogin> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(50, 41, 57, 1)),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => VendorDash()));
+                      signIn(_nameController.text, _passwordController.text);
                     },
                     child: const Text(
                       'Login',
@@ -92,9 +108,50 @@ class _VendorLoginState extends State<VendorLogin> {
                           fontFamily: 'Barlow Semi Condensed',
                           color: Color.fromRGBO(240, 236, 207, 1)),
                     )),
-              )
+              ),
+              SizedBox(height: 15,)
             ]),
       ),
     );
+  }
+
+  void signIn(String email, String password) async {
+    if (formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => VendorDash())),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+ 
+            break;
+          case "wrong-password":
+            errorMessage = "You entered the wrong password.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
   }
 }

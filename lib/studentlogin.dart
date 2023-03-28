@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project/registration.dart';
+import 'package:project/dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
 
 class StudentLogin extends StatefulWidget {
   const StudentLogin({super.key});
@@ -10,6 +14,13 @@ class StudentLogin extends StatefulWidget {
 
 class _StudentLoginState extends State<StudentLogin> {
   final formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
+  
+  String? errorMessage;
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +36,13 @@ class _StudentLoginState extends State<StudentLogin> {
             crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisSize: Ma'inAxisSize.max,
             children: [
-              Image.asset("assets/images/login.png", width: 346, height: 376),
+
+              Expanded(child: Image.asset("assets/images/login.png", width: 346, height: 376)),
               // const Spacer(flex: 1),
               SizedBox(
                 width: 300,
                 child: TextFormField(
+                  controller: _emailController,
                   decoration: const InputDecoration(
                       filled: true,
                       fillColor: Color.fromRGBO(217, 217, 217, 1),
@@ -54,6 +67,8 @@ class _StudentLoginState extends State<StudentLogin> {
               SizedBox(
                 width: 300,
                 child: TextFormField(
+                  controller: _passwordController,
+                   obscureText: true,
                   decoration: const InputDecoration(
                       filled: true,
                       fillColor: Color.fromRGBO(217, 217, 217, 1),
@@ -77,8 +92,7 @@ class _StudentLoginState extends State<StudentLogin> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFBB902D)),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => RegistrationForm()));
+                      signIn(_emailController.text, _passwordController.text);
                     },
                     child: const Text(
                       'Login',
@@ -91,4 +105,45 @@ class _StudentLoginState extends State<StudentLogin> {
       ),
     );
   }
+  void signIn(String email, String password) async {
+    if (formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => Dashboard())),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+ 
+            break;
+          case "wrong-password":
+            errorMessage = "You entered the wrong password.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
 }
+
