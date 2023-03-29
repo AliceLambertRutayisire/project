@@ -43,25 +43,30 @@ class _VendorLoginState extends State<VendorLogin> {
               Container(
                 child: SizedBox(
                   width: 300,
-                  child: TextFormField(
+                 
+                  child: 
+                  Form(
+                     key: formKey,
+                    child: TextFormField(
                     controller: _nameController,
-                  onSaved: (value) {
-                                _nameController.text = value!;
-                              },
-                    decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromRGBO(217, 217, 217, 1),
-                        prefixIcon: const Icon(
-                          Icons.shop,
-                          color: Color.fromRGBO(187, 144, 45, 1),
-                        ),
-                        hintText: 'Enter vendor name',
-                        labelText: 'Username',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        )),
+                    onSaved: (value) {
+                                  _nameController.text = value!;
+                                },
+                      decoration: const InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromRGBO(217, 217, 217, 1),
+                          prefixIcon: const Icon(
+                            Icons.shop,
+                            color: Color.fromRGBO(187, 144, 45, 1),
+                          ),
+                          hintText: 'Enter vendor name',
+                          labelText: 'Username',
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          )),
+                    ),
                   ),
                 ),
               ),
@@ -72,25 +77,30 @@ class _VendorLoginState extends State<VendorLogin> {
 
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                   controller: _passwordController,
-                  onSaved: (value) {
-                                _passwordController.text = value!;
-                              },
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      prefixIcon: const Icon(
-                        Icons.key,
-                        color: Color.fromRGBO(187, 144, 45, 1),
-                      ),
-                      hintText: 'Enter password',
-                      labelText: 'Password',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+                
+                child: 
+                Form(
+                  
+                  child: TextFormField(
+                     controller: _passwordController,
+                    onSaved: (value) {
+                                  _passwordController.text = value!;
+                                },
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(217, 217, 217, 1),
+                        prefixIcon: const Icon(
+                          Icons.key,
+                          color: Color.fromRGBO(187, 144, 45, 1),
+                        ),
+                        hintText: 'Enter password',
+                        labelText: 'Password',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        )),
+                  ),
                 ),
               ),
               SizedBox(height: 54, width: 243),
