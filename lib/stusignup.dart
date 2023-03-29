@@ -51,27 +51,30 @@ class _StudentSignupState extends State<StudentSignup> {
               // const Spacer(flex: 1),
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  autofocus: false,
-                  controller: _emailController,
-                  onSaved: (value) {
-                                _emailController.text = value!;
-                              },
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      prefixIcon: const Icon(
-                        Icons.person,
-                        color: Color.fromRGBO(50, 41, 57, 1),
-                      ),
-                      hintText: 'Enter Email',
-                      labelText: 'Email',
-                      border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: _emailController,
+                    onSaved: (value) {
+                                  _emailController.text = value!;
+                                },
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(217, 217, 217, 1),
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Color.fromRGBO(50, 41, 57, 1),
+                        ),
+                        hintText: 'Enter Email',
+                        labelText: 'Email',
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        )),
+                  ),
                 ),
               ),
 
@@ -81,38 +84,40 @@ class _StudentSignupState extends State<StudentSignup> {
 
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  autofocus: false,
-                  autovalidateMode:
-                             AutovalidateMode.onUserInteraction,
-                              validator: (value) =>
-                                  value != null && value.length < 6
-                                      ? 'Enter min 6 characters'
-                                      : null,
-                              controller: _passwordController,
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: true,
-                               onSaved: (value) {
-                                _passwordController.text = value!;
-                              },
-                              decoration: const InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromRGBO(217, 217, 217, 1),
-                                  prefixIcon: const Icon(
-                                    Icons.key,
-                                    color: Color.fromRGBO(50, 41, 57, 1),
-                                  ),
-                                  hintText: 'Enter password',
-                                  labelText: 'Password',
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(20, 15, 20,15),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                child: Form(
+                  child: TextFormField(
+                    autofocus: false,
+                    autovalidateMode:
+                               AutovalidateMode.onUserInteraction,
+                                validator: (value) =>
+                                    value != null && value.length < 6
+                                        ? 'Enter min 6 characters'
+                                        : null,
+                                controller: _passwordController,
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: true,
+                                 onSaved: (value) {
+                                  _passwordController.text = value!;
+                                },
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(217, 217, 217, 1),
+                                    prefixIcon: const Icon(
+                                      Icons.key,
+                                      color: Color.fromRGBO(50, 41, 57, 1),
+                                    ),
+                                    hintText: 'Enter password',
+                                    labelText: 'Password',
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(20, 15, 20,15),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      
                                     
-                                  
-                                  )
-                                  
-                                  ),
+                                    )
+                                    
+                                    ),
+                  ),
                 ),
               ),
 
