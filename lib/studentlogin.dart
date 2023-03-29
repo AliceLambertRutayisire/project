@@ -6,20 +6,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class StudentLogin extends StatefulWidget {
-  const StudentLogin({super.key});
+  const StudentLogin({Key? key}) :super(key: key);
 
   @override
   State<StudentLogin> createState() => _StudentLoginState();
 }
 
 class _StudentLoginState extends State<StudentLogin> {
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
   
-  String? errorMessage;
+    String errorMessage = "";
+
 
 
   @override
@@ -41,22 +42,32 @@ class _StudentLoginState extends State<StudentLogin> {
               // const Spacer(flex: 1),
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      icon: const Icon(
-                        Icons.person,
-                        color: Color.fromRGBO(50, 41, 57, 1),
-                      ),
-                      hintText: 'Enter Email',
-                      labelText: 'Email',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+               
+                child: 
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    
+                    controller: _emailController,
+                    onSaved: (value) {
+                                    _emailController.text = value!;
+                                  },
+                    
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(217, 217, 217, 1),
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Color.fromRGBO(50, 41, 57, 1),
+                        ),
+                        hintText: 'Enter Email',
+                        labelText: 'Email',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        )),
+                  ),
                 ),
               ),
 
@@ -66,23 +77,30 @@ class _StudentLoginState extends State<StudentLogin> {
 
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  controller: _passwordController,
-                   obscureText: true,
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      icon: const Icon(
-                        Icons.password_outlined,
-                        color: Color.fromRGBO(50, 41, 57, 1),
-                      ),
-                      hintText: 'Enter password',
-                      labelText: 'Password',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+                
+                child: Form(
+                  child: TextFormField(
+                    controller: _passwordController,
+                    onSaved: (value) {
+                                  _passwordController.text = value!;
+                                },
+                    
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(217, 217, 217, 1),
+                        prefixIcon: const Icon(
+                          Icons.key,
+                          color: Color.fromRGBO(50, 41, 57, 1),
+                        ),
+                        hintText: 'Enter password',
+                        labelText: 'Password',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        )),
+                  ),
                 ),
               ),
               SizedBox(height: 54, width: 243),
@@ -106,7 +124,7 @@ class _StudentLoginState extends State<StudentLogin> {
     );
   }
   void signIn(String email, String password) async {
-    if (formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
@@ -139,7 +157,7 @@ class _StudentLoginState extends State<StudentLogin> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        Fluttertoast.showToast(msg: errorMessage!);
+        Fluttertoast.showToast(msg: errorMessage);
         print(error.code);
       }
     }
