@@ -1,10 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
+
 import 'package:flutter/material.dart';
-import 'package:project/vendorlogin.dart';
+import 'package:project/studentlogin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project/vendorlogin.dart';
 import 'models/studentmodel.dart';
-import 'models/vendormodels.dart';
 
 
 class VendorSignup extends StatefulWidget {
@@ -15,13 +17,22 @@ class VendorSignup extends StatefulWidget {
 }
 
 class _VendorSignupState extends State<VendorSignup> {
-  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
    
   String? errorMessage;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,33 +43,39 @@ class _VendorSignupState extends State<VendorSignup> {
       backgroundColor: Color.fromRGBO(201, 199, 126, 1),
       body: Center(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisSize: Ma'inAxisSize.max,
+
             children: [
               Expanded(child: Image.asset("assets/images/vendor_login.png", width: 346, height: 376)),
               // const Spacer(flex: 1),
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  controller: _nameController,
-                  onSaved: (value) {
-                                _nameController.text = value!;
-                              },
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      prefixIcon: const Icon(
-                        Icons.person,
-                        color: Color.fromRGBO(50, 41, 57, 1),
-                      ),
-                      hintText: 'Enter Username',
-                      labelText: 'Username',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: _emailController,
+                    onSaved: (value) {
+                                  _emailController.text = value!;
+                                },
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(217, 217, 217, 1),
+                        prefixIcon: const Icon(
+                          Icons.person,
+                          color: Color(0xFFBB902D),
+                        ),
+                        hintText: 'Enter Email',
+                        labelText: 'Email',
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        )),
+                  ),
                 ),
               ),
 
@@ -68,76 +85,96 @@ class _VendorSignupState extends State<VendorSignup> {
 
               SizedBox(
                 width: 300,
-                child: TextFormField(
-                  controller: _passwordController,
-                  onSaved: (value) {
-                                _passwordController.text = value!;
-                              },
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromRGBO(217, 217, 217, 1),
-                      prefixIcon: const Icon(
-                        Icons.key,
-                        color: Color.fromRGBO(50, 41, 57, 1),
-                      ),
-                      hintText: 'Enter password',
-                      labelText: 'Password',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      )),
+                child: Form(
+                  child: TextFormField(
+                    autofocus: false,
+                    autovalidateMode:
+                               AutovalidateMode.onUserInteraction,
+                                validator: (value) =>
+                                    value != null && value.length < 6
+                                        ? 'Enter min 6 characters'
+                                        : null,
+                                controller: _passwordController,
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: true,
+                                 onSaved: (value) {
+                                  _passwordController.text = value!;
+                                },
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    fillColor: Color.fromRGBO(217, 217, 217, 1),
+                                    prefixIcon: const Icon(
+                                      Icons.key,
+                                      color: Color(0xFFBB902D),),
+                                    hintText: 'Enter password',
+                                    labelText: 'Password',
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(20, 15, 20,15),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      
+                                    
+                                    )
+                                    
+                                    ),
+                  ),
                 ),
               ),
+
               SizedBox(
                 height: 20,
               ),
-            SizedBox(
+            
+              SizedBox(
                 width: 100,
                 child: Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(20),
                   child: MaterialButton(
                       padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      color: Color.fromRGBO(50, 41, 57, 1),
+                     color: Color.fromRGBO(50, 41, 57, 1),
+                      
                       minWidth: MediaQuery.of(context).size.width,
                       onPressed: () {
-                          signUp(_nameController.text, _passwordController.text);
+                          signUp(_emailController.text, _passwordController.text);
                       },
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
                             fontFamily: 'Barlow Semi Condensed',
-                            color: Color.fromRGBO(240, 236, 207, 1)
-                            ),
+                            color: Color.fromRGBO(240, 236, 207, 1)),
                       ))),
               ),
+
              SizedBox(height: 15,),
             
             TextButton(onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => VendorLogin()));
+                              builder: (context) => StudentLogin()));
             },  
             child: RichText(text: TextSpan(
               children: [
                 TextSpan(
                   text: 'Already have an Account? Sign In',
                   style: TextStyle(fontSize: 10,
-                   color:  Color(0xFFBB902D))
+                   color: Color.fromRGBO(50, 41, 57, 1))
                 )
                 
               ]
               
              ))
               ),
-             SizedBox(height: 15)
+             
+            SizedBox(height:15)
             ]),
       ),
     );
-
   }
+
+
+   // sign Up function
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -187,17 +224,17 @@ class _VendorSignupState extends State<VendorSignup> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
  
-    VendorModel vendorModel = VendorModel();
+    StudentModel studentModel = StudentModel();
  
     // writing all the values
-    vendorModel.email = user!.email;
-    vendorModel.uid = user.uid;
+    studentModel.email = user!.email;
+    studentModel.uid = user.uid;
     
  
     await firebaseFirestore
         .collection("vendor")
         .doc(user.uid)
-        .set(vendorModel.toMap());
+        .set(studentModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
  
     Navigator.pushAndRemoveUntil(
@@ -205,4 +242,7 @@ class _VendorSignupState extends State<VendorSignup> {
         MaterialPageRoute(builder: (context) => VendorLogin()),
         (route) => false);
   }
+
 }
+
+
